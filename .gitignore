@@ -1,0 +1,22 @@
+# Build outputs
+#main.js
+styles.css
+
+# Note: manifest.json is usually kept in root for Obsidian plugins, 
+# but if you use a build script that copies it to a dist folder, 
+# you might want to ignore the one in dist.
+# For this project, we keep manifest.json in root as per structure.md.
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Build directory
+dist/

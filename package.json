@@ -1,0 +1,32 @@
+{
+	"name": "obsidian-single-html-exporter",
+	"version": "1.0.0",
+	"description": "Export Obsidian notes to a single self-contained HTML file with embedded images (Base64).",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "node esbuild.config.mjs production",
+		"test": "vitest run",
+		"version": "node version-bump.mjs && git add manifest.json versions.json"
+	},
+	"keywords": [
+		"obsidian",
+		"plugin",
+		"html",
+		"export"
+	],
+	"author": "Satoshi Nagayasu",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^16.11.21",
+		"@typescript-eslint/eslint-plugin": "^5.13.0",
+		"@typescript-eslint/parser": "^5.13.0",
+		"builtin-modules": "^3.2.0",
+		"esbuild": "0.14.21",
+		"jsdom": "^29.1.1",
+		"obsidian": "latest",
+		"tslib": "2.3.1",
+		"typescript": "4.5.5",
+		"vitest": "^4.1.5"
+	}
+}
