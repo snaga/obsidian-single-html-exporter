@@ -64,6 +64,11 @@
     - `ExportController`: HTML だけでなく CSS からのリソースも収集するようにパイプラインを調整。
     - `HtmlPacker`: CSS 文字列内の URL を Data URI に置換するロジックを実装。
     - これにより、外部フォントや CSS 背景画像も 100% 埋め込まれるようになった。
+- [x] Task 4-7: モダンブラウザの Data URI 遷移制限の回避 (Security Bypass)
+  - 変更内容:
+    - `HtmlPacker`: `injectDataUriBypassScript` を実装し、HTML の末尾に JS を注入。
+    - `getAttribute('href')` を用いて Data URI を取得し、`window.open` + `document.write` で表示するロジックにより、`about:blank` になる不具合を修正。
+  - テスト戦略: 実機確認（ブラウザでの動作検証）。
 
 ## フェーズ 5: パフォーマンス最適化
 - [ ] Task 5-1: PurgeCSS による CSS 最適化の実装 (実験的) [保留]

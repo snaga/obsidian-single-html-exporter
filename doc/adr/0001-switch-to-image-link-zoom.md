@@ -16,11 +16,12 @@ Lightbox 方式を廃止し、画像を `<a>` タグでラップして `target="
 具体的には：
 -   `HtmlPacker` から Lightbox 用の CSS と HTML 構造を削除。
 -   画像を `<a href="DATA_URI" target="_blank" class="image-link">` でラップ。
+-   **Security Bypass**: モダンブラウザの `data:` URL 制限を回避するため、JavaScript による `window.open()` + `document.write()` 方式を併用し、確実に画像が表示されるようにします。
 -   設定項目名を `Enable image zoom (open in new tab)` に変更。
 
 ## Consequences
 ### Merits
--   **確実性**: ブラウザ標準のリンク機能を使うため、スクロール位置や CSS レイアウトに左右されず、100% 確実にオリジナルサイズが表示されます。
+-   **確実性**: ブラウザ標準のリンク機能と JS バイパスを組み合わせることで、CSS レイアウトやセキュリティ制限に左右されず、100% 確実にオリジナルサイズが表示されます。
 -   **機能性**: 別タブで開くことで、ブラウザ標準のズーム、右クリック保存、印刷機能がそのまま利用可能です。
 -   **軽量化**: 複雑な Lightbox 用 CSS を排除でき、HTML ファイルがより軽量になります。
 

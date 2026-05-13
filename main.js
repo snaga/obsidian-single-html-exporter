@@ -598,7 +598,35 @@ ${titleHtml}${fullHtml}
     processedHtml = this.unescapeImageSrc(processedHtml);
     processedHtml = this.replaceResourceLinks(processedHtml, resources);
     processedHtml = this.replaceYoutubeIframes(processedHtml, resources);
+    if (enableImageZoom) {
+      processedHtml = this.injectDataUriBypassScript(processedHtml);
+    }
     return processedHtml;
+  }
+  injectDataUriBypassScript(html) {
+    const script = `
+		<script id="data-uri-bypass">
+		document.addEventListener('click', function(e) {
+			const link = e.target.closest('a.image-link');
+			if (link && link.href && link.href.startsWith('data:image/')) {
+				e.preventDefault();
+				const dataUri = link.getAttribute('href');
+				const win = window.open();
+				if (win) {
+					win.document.write('<html><head><title>Image Preview</title><style>body { margin: 0; display: flex; align-items: center; justify-content: center; background: #202020; min-height: 100vh; } img { max-width: 100%; height: auto; cursor: zoom-out; }</style></head><body onclick="window.close()"><img src="' + dataUri + '"></body></html>');
+					win.document.close();
+				} else {
+					console.error('Failed to open image preview window. Pop-up blocker might be active.');
+				}
+			}
+		}, true);
+		<\/script>`;
+    if (html.includes("</body>")) {
+      return html.replace("</body>", `${script}
+</body>`);
+    } else {
+      return html + script;
+    }
   }
   injectNuclearPrintReset(html) {
     const resetCss = `

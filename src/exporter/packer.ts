@@ -178,7 +178,42 @@ ${titleHtml}${fullHtml}
 		// 5. Replace YouTube iframes with thumbnail links
 		processedHtml = this.replaceYoutubeIframes(processedHtml, resources);
 
+		// 6. Inject Data URI navigation bypass script if image zoom is enabled
+		if (enableImageZoom) {
+			processedHtml = this.injectDataUriBypassScript(processedHtml);
+		}
+
 		return processedHtml;
+	}
+
+	/**
+	 * Injects a script to bypass browser security restrictions when opening data:image URLs.
+	 * Modern browsers block top-frame navigation to data: URLs.
+	 */
+	private injectDataUriBypassScript(html: string): string {
+		const script = `
+		<script id="data-uri-bypass">
+		document.addEventListener('click', function(e) {
+			const link = e.target.closest('a.image-link');
+			if (link && link.href && link.href.startsWith('data:image/')) {
+				e.preventDefault();
+				const dataUri = link.getAttribute('href');
+				const win = window.open();
+				if (win) {
+					win.document.write('<html><head><title>Image Preview</title><style>body { margin: 0; display: flex; align-items: center; justify-content: center; background: #202020; min-height: 100vh; } img { max-width: 100%; height: auto; cursor: zoom-out; }</style></head><body onclick="window.close()"><img src="' + dataUri + '"></body></html>');
+					win.document.close();
+				} else {
+					console.error('Failed to open image preview window. Pop-up blocker might be active.');
+				}
+			}
+		}, true);
+		</script>`;
+
+		if (html.includes('</body>')) {
+			return html.replace('</body>', `${script}\n</body>`);
+		} else {
+			return html + script;
+		}
 	}
 
 	/**

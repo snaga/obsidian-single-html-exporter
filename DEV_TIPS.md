@@ -36,3 +36,10 @@
 - **対策**: 
     1.  親要素の当該プロパティを `none !important` でリセットする。
     2.  それでも制御が難しい場合は、`target="_blank"` で別タブに逃がすなど、より堅牢な方式（ブラウザ標準機能の活用）に切り替える。
+
+## 7. モダンブラウザにおける Data URI の遷移制限
+- **課題**: `data:image/...` への直接リンク（`<a>`タグ）は、モダンブラウザのセキュリティ制限（Top-frame navigations to data URLs）によりブロックされ、`about:blank` になる。
+- **解決策**: JavaScript でクリックイベントを奪い、`window.open()` で空のタブを開いてから `document.write()` でコンテンツを注入する。
+- **注意点**: 
+    - `link.href` ではなく `link.getAttribute('href')` を使うことで、ブラウザによる URL 解決の影響を避け、生の Data URI を確実に取得できる。
+    - ポップアップブロッカーによって `window.open()` が `null` を返す可能性があるため、エラーハンドリングが必要。

@@ -139,5 +139,7 @@ sequenceDiagram
     2. HTML 内の `<img>` 属性を Data URI で置換。
     3. YouTube の `<iframe>` を、サムネイル画像、再生ボタン、リンクの構造に置換。
     4. 設定に応じて、画像を `<a>` タグでラップし別タブ表示に対応（参照: ADR-0001）。
-    5. レイアウト補正 CSS を注入（スタック文脈のリセット等）。
+    5. **Security Bypass Script の注入**: モダンブラウザの `data:` URL 遷移制限を回避するため、JavaScript による動的なウィンドウ生成と `document.write` を用いた画像表示ロジックを注入する。
+    6. レイアウト補正 CSS を注入（スタック文脈のリセット等）。
+    7. Nuclear Print Reset (最高優先度の印刷用スタイル) を注入。
 
