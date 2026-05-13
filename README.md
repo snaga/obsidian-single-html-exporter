@@ -32,7 +32,7 @@ Obsidian で執筆したノートを、スタイル（CSS）や埋め込み画�
 ## インストール方法
 
 ### 手動インストール
-1. [GitHub](https://github.com/snaga/obsidian-single-html-exporter) の Releases から `main.js` と `manifest.json` をダウンロードします。
+1. Gitレポジトリから `main.js` と `manifest.json` をダウンロードします。
 2. 自分の Vault の `.obsidian/plugins/obsidian-single-html-exporter/` フォルダに配置します。
 3. Obsidian の設定からプラグインを有効にします。
 
